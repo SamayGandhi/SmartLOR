@@ -1,0 +1,12 @@
+import express from 'express';
+import { registerUser, loginUser, logoutUser, getUserProfile, updateProfile, submitProfessorVerificationDocs } from '../controllers/authController.js';
+import { protect } from '../middleware/authMiddleware.js';
+import { uploadProfessorVerificationDocs } from '../middleware/uploadMiddleware.js';
+const router = express.Router();
+router.post('/register', uploadProfessorVerificationDocs, registerUser);
+router.post('/login', loginUser);
+router.post('/logout', protect, logoutUser);
+router.get('/me', protect, getUserProfile);
+router.patch('/professor-verification', protect, uploadProfessorVerificationDocs, submitProfessorVerificationDocs);
+router.patch('/me', protect, updateProfile);
+export default router;
